@@ -1,5 +1,5 @@
 $(document).ready(async function () {
-    const response = await fetch("/api/");
+    const response = await fetch("/api/products/");
     if (response.ok) {
         let productsList = await response.json();
         for (let product of productsList) {
@@ -7,7 +7,7 @@ $(document).ready(async function () {
         }
 
         $(document).on("click", ".remove", async (event) => {
-            const response = await fetch(`/api/remove/${event.target.parentNode.id}`, {
+            const response = await fetch(`/api/products/remove/${event.target.parentNode.id}`, {
                 method: "POST", headers: {"Accept": "application/json"}
             });
             if (response.ok) {
@@ -17,7 +17,7 @@ $(document).ready(async function () {
             }
         });
         $(document).on("click", ".update", async (event) => {
-            await fetch(`/api/update/${event.target.parentNode.id}`, {
+            await fetch(`/api/products/update/${event.target.parentNode.id}`, {
                 method: "POST", headers: {"Accept": "application/json"}
             });
         });

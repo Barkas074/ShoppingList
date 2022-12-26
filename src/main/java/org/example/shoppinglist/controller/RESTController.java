@@ -14,7 +14,7 @@ import org.example.shoppinglist.service.ProductService;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/products")
 public class RESTController {
     private final ProductService productService;
     
@@ -22,7 +22,7 @@ public class RESTController {
         this.productService = productService;
     }
     
-    @GetMapping("/")
+    @GetMapping({"/", ""})
     private Iterable<Product> list() {
         return productService.getAllProducts();
     }
