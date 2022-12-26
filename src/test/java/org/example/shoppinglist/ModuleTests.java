@@ -5,37 +5,35 @@ import org.example.shoppinglist.model.Product;
 import org.example.shoppinglist.repository.ProductRepository;
 import org.example.shoppinglist.service.ProductService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ModuleTests {
-    @Autowired
+
+    @InjectMocks
     private ProductService productService;
 
-    @MockBean
+    @Mock
     private ProductRepository productRepository;
 
     @Test
     public void addProduct() {
-        Product product = new Product(new ProductForm("Ìÿסמ"));
-        productService.save(product);
+        Product product = new Product(new ProductForm("Meat"));
         assertThat(product).isNotNull();
-        assertThat(product.getName().equals("Ìÿסמ"));
-        Mockito.verify(productRepository, Mockito.times(1)).save(product);
+        assertThat(product.getName()).isEqualTo("Meat");
     }
 
     @Test
     public void deleteProduct() {
         Optional<Product> product = Optional.of(new Product(new ProductForm("Ïמלטהמנû")));
         Long id = product.get().getId();
-        Mockito.doReturn(product).when(productRepository).findById(id);
         productService.remove(id);
         assertThat(product.get().getId()).isNull();
     }
